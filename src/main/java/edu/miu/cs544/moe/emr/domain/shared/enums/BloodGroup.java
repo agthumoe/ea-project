@@ -1,4 +1,4 @@
-package edu.miu.cs544.moe.emr.domain.enums;
+package edu.miu.cs544.moe.emr.domain.shared.enums;
 
 public enum BloodGroup {
     O_POSITIVE("O+"),

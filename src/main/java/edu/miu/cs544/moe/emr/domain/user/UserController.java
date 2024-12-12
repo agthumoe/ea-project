@@ -1,8 +1,10 @@
 package edu.miu.cs544.moe.emr.domain.user;
 
-import edu.miu.cs544.moe.emr.domain.user.dto.UserRequest;
+import edu.miu.cs544.moe.emr.domain.user.dto.CreateUser;
+import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUser;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +14,11 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @PostMapping
+    public UserResponse create(@RequestBody @Validated CreateUser user) {
+        return this.userService.create(user);
+    }
 
     @GetMapping
     public List<UserResponse> getAllUsers() {
@@ -23,9 +30,9 @@ public class UserController {
         return this.userService.getOneUser(id).orElseThrow(() -> new RuntimeException("Not found"));
     }
 
-    @PostMapping
-    public UserResponse create(@RequestBody UserRequest user) {
-        return this.userService.create(user);
+    @PutMapping("{id}")
+    public UserResponse update(@PathVariable Long id, @RequestBody @Validated UpdateUser user) {
+        return this.userService.update(id, user);
     }
 
     @DeleteMapping("{id}")
