@@ -1,6 +1,6 @@
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest
     environment:
       MYSQL_DATABASE: mydb
       MYSQL_USER: admin

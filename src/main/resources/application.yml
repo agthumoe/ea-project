@@ -2,4 +2,4 @@ spring:
   application:
     name: ea-project
   profiles:
-    active: dev
+    active: dev,mysql
