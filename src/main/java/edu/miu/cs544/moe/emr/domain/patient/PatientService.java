@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PatientService {
     List<PatientDto> getAllPatients(String name, Gender gender, String phone, Integer ageFrom, Integer ageTo, String city, String state, String categoryName);
-    Optional<Patient> getOnePatient(Long id);
+    Optional<PatientDto> getOnePatient(Long id);
     Patient create(Patient patient);
     Patient update(Long id, Patient patient);
     void deleteById(Long id);

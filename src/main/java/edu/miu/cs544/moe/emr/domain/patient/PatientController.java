@@ -29,7 +29,7 @@ public class PatientController {
     }
 
     @GetMapping("{id}")
-    public Patient getOne(@PathVariable Long id) {
+    public PatientDto getOne(@PathVariable Long id) {
         return this.patientService.getOnePatient(id).orElseThrow(() -> new NotFoundException("Not found"));
     }
 

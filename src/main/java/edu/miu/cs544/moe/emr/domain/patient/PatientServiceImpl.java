@@ -4,6 +4,8 @@ import edu.miu.cs544.moe.emr.application.Mapper;
 import edu.miu.cs544.moe.emr.domain.category.Category;
 import edu.miu.cs544.moe.emr.domain.category.CategorySpecification;
 import edu.miu.cs544.moe.emr.domain.shared.enums.Gender;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,12 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private Mapper mapper;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public List<PatientDto> getAllPatients(String name, Gender gender, String phone, Integer ageFrom, Integer ageTo, String city, String state, String categoryName) {
+        System.out.println("entityManager = " + entityManager);
         Specification<Patient> spec = (root, query, cb) -> cb.conjunction();
         if (name != null) {
             spec = spec.and(PatientSpecification.hasName(name));
@@ -52,8 +58,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Optional<Patient> getOnePatient(Long id) {
-        return this.repository.findById(id);
+    public Optional<PatientDto> getOnePatient(Long id) {
+        return this.repository.findById(id).map(patient -> this.mapper.map(patient, PatientDto.class));
     }
 
     @Override
