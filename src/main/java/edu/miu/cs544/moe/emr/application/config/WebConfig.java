@@ -25,13 +25,13 @@ public class WebConfig implements WebMvcConfigurer {
         configurer.favorParameter(true);
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource resourceBundleMessageSource= new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasename("i18n/messages");
-        resourceBundleMessageSource.setDefaultEncoding("UTF-8");
-        return resourceBundleMessageSource;
-    }
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource resourceBundleMessageSource= new ResourceBundleMessageSource();
+//        resourceBundleMessageSource.setBasename("i18n/messages");
+//        resourceBundleMessageSource.setDefaultEncoding("UTF-8");
+//        return resourceBundleMessageSource;
+//    }
 
     @Bean
     public LocaleResolver localeResolver(){

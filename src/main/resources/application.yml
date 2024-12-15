@@ -2,7 +2,9 @@ spring:
   application:
     name: ea-project
   profiles:
-    active: dev,mysql
+    active: dev,h2
+  messages:
+    basename: i18n/messages
 logging:
   pattern:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){green} %clr([%thread]){magenta} %clr(%-5level){yellow} %clr(%logger{36}){blue} - %msg%n"
