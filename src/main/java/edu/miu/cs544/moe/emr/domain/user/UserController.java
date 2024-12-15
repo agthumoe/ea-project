@@ -38,7 +38,6 @@ public class UserController {
 
     @PostMapping
     public UserResponse create(@RequestBody @Validated CreateUser user) {
-
         return this.userService.create(user);
     }
 

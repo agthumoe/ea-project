@@ -1,6 +1,8 @@
 package edu.miu.cs544.moe.emr.domain.patient;
 
+import edu.miu.cs544.moe.emr.application.Mapper;
 import edu.miu.cs544.moe.emr.application.exception.NotFoundException;
+import edu.miu.cs544.moe.emr.domain.shared.enums.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +15,17 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping
-    public List<Patient> getAllPatients() {
-        return this.patientService.getAllPatients();
+    public List<PatientDto> getAllPatients(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Gender gender,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) Integer ageFrom,
+            @RequestParam(required = false) Integer ageTo,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String categoryName
+            ) {
+        return this.patientService.getAllPatients(name, gender, phone, ageFrom, ageTo, city, state, categoryName);
     }
 
     @GetMapping("{id}")
