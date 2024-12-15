@@ -9,3 +9,5 @@ logging:
 application:
   title: @project.name@ (@project.description@)
   version: @project.version@
+  description: @project.description@
+  info: @project.name@,@project.description@,@project.version@
