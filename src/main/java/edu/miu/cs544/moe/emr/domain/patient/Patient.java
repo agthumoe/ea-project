@@ -31,4 +31,16 @@ public class Patient extends Person {
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Vital vital;
+
+    public Patient() {
+    }
+
+    public Patient(String name, Gender gender, String phone, LocalDate dateOfBirth, BloodGroup bloodGroup, Address address) {
+        this.setName(name);
+        this.gender = gender;
+        this.phone = phone;
+        this.dateOfBirth = dateOfBirth;
+        this.bloodGroup = bloodGroup;
+        this.address = address;
+    }
 }

@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
 public class SubCategory extends MutableModel {
     private String name;
@@ -21,4 +19,13 @@ public class SubCategory extends MutableModel {
     @EqualsAndHashCode.Exclude
     @ManyToOne
     private Category category;
+
+    public SubCategory() {
+    }
+
+    public SubCategory(String name, String description, Category category) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+    }
 }

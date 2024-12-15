@@ -5,14 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class Vital {
     @Id
     private Long id;
@@ -29,4 +25,20 @@ public class Vital {
     private double oxygenLevel;
     private double respiratoryRate;
     private double glucoseLevel;
+
+    public Vital() {
+    }
+
+    public Vital(Patient patient, double temperature, double bloodPressure, double pulse, double weight, double height, double bmi, double oxygenLevel, double respiratoryRate, double glucoseLevel) {
+        this.patient = patient;
+        this.temperature = temperature;
+        this.bloodPressure = bloodPressure;
+        this.pulse = pulse;
+        this.weight = weight;
+        this.height = height;
+        this.bmi = bmi;
+        this.oxygenLevel = oxygenLevel;
+        this.respiratoryRate = respiratoryRate;
+        this.glucoseLevel = glucoseLevel;
+    }
 }
