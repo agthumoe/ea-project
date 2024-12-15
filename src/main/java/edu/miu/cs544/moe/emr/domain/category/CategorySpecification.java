@@ -31,7 +31,7 @@ public class CategorySpecification {
             Predicate categoryPredicate = categorySpec.toPredicate(categoryRoot, query, cb);
 
             // Select Patient IDs that match the Category criteria
-            categorySubquery.select(categoryPatientJoin.get("id")).where(cb.and(categoryPredicate));
+            categorySubquery.select(categoryPatientJoin.get("id")).where(categoryPredicate);
 
             // Ensure the Patient is associated with one of the Categories in the Subquery
             Predicate associationPredicate = cb.in(root.get("id")).value(categorySubquery);
