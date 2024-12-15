@@ -42,9 +42,8 @@ public class UserController {
         return this.userService.create(user);
     }
 
-    @GetMapping(produces = {"application/json", "application/xml"}, consumes = {"application/json", "application/xml"})
+    @GetMapping()
     public List<UserResponse> getAllUsers(@RequestHeader(value = "Accept-Language", required = false, defaultValue = "US") Locale locale) {
-        System.out.println(messageSource.getMessage("user.welcome", null, locale));
         var result = this.userService.getAllUsers();
         this.jmsTemplate.convertAndSend("usersQueue", result);
         return result;

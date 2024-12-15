@@ -1,5 +1,6 @@
 package edu.miu.cs544.moe.emr.application;
 
+import edu.miu.cs544.moe.emr.application.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.domain.user.UserService;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class UserEditor extends PropertyEditorSupport {
     }
 
     @Override
-    public void setAsText(String text) throws IllegalArgumentException {
-        UserResponse user = userService.getOneUser(Long.parseLong(text)).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    public void setAsText(String text) throws NotFoundException {
+        UserResponse user = userService.getOneUser(Long.parseLong(text)).orElseThrow(() -> new NotFoundException("User not found"));
         setValue(user);
     }
 }

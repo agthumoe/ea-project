@@ -1,5 +1,6 @@
 package edu.miu.cs544.moe.emr.domain.patient;
 
+import edu.miu.cs544.moe.emr.application.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class PatientController {
 
     @GetMapping("{id}")
     public Patient getOne(@PathVariable Long id) {
-        return this.patientService.getOnePatient(id).orElseThrow(() -> new RuntimeException("Not found"));
+        return this.patientService.getOnePatient(id).orElseThrow(() -> new NotFoundException("Not found"));
     }
 
     @PostMapping
