@@ -2,7 +2,7 @@ spring:
   application:
     name: ea-project
   profiles:
-    active: dev,h2
+    active: dev,mysql
   messages:
     basename: i18n/messages
     encoding: UTF-8

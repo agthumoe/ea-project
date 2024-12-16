@@ -15,4 +15,13 @@ public class SubCategorySpecification {
     public static Specification<SubCategory> hasDescription(String description) {
         return (root, query, cb) -> cb.like(cb.lower(root.get("description")), "%" + description.toLowerCase() + "%");
     }
+
+    public static Specification<SubCategory> categoryName(String name) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            Join<SubCategory, Category> categoryJoin = root.join("category", JoinType.INNER);
+            root.fetch("category");
+            return cb.like(cb.lower(categoryJoin.get("name")), "%" + name.toLowerCase() + "%");
+        };
+    }
 }

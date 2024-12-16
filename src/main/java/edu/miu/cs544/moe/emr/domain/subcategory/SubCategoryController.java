@@ -18,9 +18,15 @@ public class SubCategoryController {
 
     @GetMapping("/subcategories")
     public List<SubCategoryDto> getSubCategories() {
-        Specification<SubCategory> spec = Specification.where(null);
-        spec = spec.and(SubCategorySpecification.hasName("Therapy"));
+        Specification<SubCategory> spec = (root, query, cb) -> {
+            query.distinct(true);
+            root.fetch("category");
+
+            return cb.conjunction();
+        };
+//        spec = spec.and(SubCategorySpecification.hasName("Physical"));
 //        spec = spec.and(SubCategorySpecification.hasDescription("physical"));
+//        spec = spec.and(SubCategorySpecification.categoryName("Rehabilitation"));
         List<SubCategory> subCategories = subCategoryRepository.findAll(spec);
         return mapper.map(subCategories, SubCategoryDto.class);
     }
