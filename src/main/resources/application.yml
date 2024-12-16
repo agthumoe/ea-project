@@ -5,6 +5,7 @@ spring:
     active: dev,h2
   messages:
     basename: i18n/messages
+    encoding: UTF-8
 logging:
   pattern:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){green} %clr([%thread]){magenta} %clr(%-5level){yellow} %clr(%logger{36}){blue} - %msg%n"
