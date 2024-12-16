@@ -43,8 +43,11 @@ public class UserController {
 
     @GetMapping()
     public List<UserResponse> getAllUsers(@RequestHeader(value = "Accept-Language", required = false, defaultValue = "US") Locale locale) {
-        var result = this.userService.getAllUsers();
+        List<UserResponse> result = this.userService.getAllUsers();
+        System.out.println(messageSource.getMessage("user.welcome", null, locale));
+        System.out.println(locale);
         this.jmsTemplate.convertAndSend("usersQueue", result);
+        result.get(0).setName(messageSource.getMessage("user.welcome", null, locale));
         return result;
     }
 
