@@ -7,3 +7,12 @@ logging:
   level:
     root: info
     edu.miu.cs544.moe.emr: debug
+app:
+  security:
+    cors:
+      origins: "*"
+    jwt:
+      secret: +NYuD2psQg62/zjjXB6LWtqPTg03hnrmBycSiuCXEtqFW5FtnRIR442y7KtZQROUuZ091vW00KS1TbtSDnn8mw==
+      expiration: 86400000 # 1 day
+      refresh-token:
+        expiration: 604800000 # 7 days

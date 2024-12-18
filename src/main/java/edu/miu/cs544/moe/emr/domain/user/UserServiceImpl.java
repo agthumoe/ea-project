@@ -1,6 +1,6 @@
 package edu.miu.cs544.moe.emr.domain.user;
 
-import edu.miu.cs544.moe.emr.application.Mapper;
+import edu.miu.cs544.moe.emr.helper.Mapper;
 import edu.miu.cs544.moe.emr.domain.user.dto.CreateUser;
 import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUser;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;

@@ -1,4 +1,4 @@
-package edu.miu.cs544.moe.emr.application;
+package edu.miu.cs544.moe.emr.helper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
