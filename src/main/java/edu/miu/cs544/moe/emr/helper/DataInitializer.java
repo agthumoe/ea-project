@@ -1,5 +1,6 @@
 package edu.miu.cs544.moe.emr.helper;
 
+import edu.miu.cs544.moe.emr.domain.shared.enums.Role;
 import edu.miu.cs544.moe.emr.domain.user.User;
 import edu.miu.cs544.moe.emr.domain.user.UserRepository;
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         logger.info("Initializing data...");
-        this.userRepository.save(new User("admin", passwordEncoder.encode("password"), "Administrator"));
-        this.userRepository.save(new User("user", passwordEncoder.encode("password"), "User"));
+        this.userRepository.save(new User("Administrator", "admin", passwordEncoder.encode("password"), Role.ROLE_ADMIN));
+        this.userRepository.save(new User("Doctor", "doctor", passwordEncoder.encode("password"), Role.ROLE_DOCTOR));
+        this.userRepository.save(new User("Nurse", "nurse", passwordEncoder.encode("password"), Role.ROLE_NURSE));
     }
 }

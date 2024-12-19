@@ -4,14 +4,17 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class JwtServiceImpl implements JwtService {
@@ -50,13 +53,27 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String getEmail(String accessToken) {
+    public String getUsername(String accessToken) {
         return Jwts.parser()
                 .verifyWith(getSignInKey())
                 .build()
                 .parseSignedClaims(accessToken)
                 .getPayload()
                 .getSubject();
+    }
+
+    @Override
+    public UserDetails getUserDetails(String accessToken) {
+        String authorityString = Jwts.parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(accessToken)
+                .getPayload()
+                .get("authorities", String.class);
+        List<GrantedAuthority> authorities = Stream.of(authorityString.split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        return new UserPrincipal(getUsername(accessToken), "", authorities);
     }
 
     @Override

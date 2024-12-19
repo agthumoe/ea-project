@@ -1,6 +1,10 @@
 package edu.miu.cs544.moe.emr.domain.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
-public record UpdateUser(@NotBlank String name) {
+@Data
+public class UpdateUser {
+    @NotBlank
+    private String name;
 }

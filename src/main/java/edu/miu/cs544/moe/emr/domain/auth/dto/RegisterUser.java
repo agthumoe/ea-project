@@ -1,10 +1,10 @@
-package edu.miu.cs544.moe.emr.domain.user.dto;
+package edu.miu.cs544.moe.emr.domain.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CreateUser {
+public class RegisterUser {
     @NotBlank
     private String name;
     @NotBlank

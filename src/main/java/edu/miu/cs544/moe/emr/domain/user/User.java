@@ -1,61 +1,30 @@
 package edu.miu.cs544.moe.emr.domain.user;
 
 import edu.miu.cs544.moe.emr.domain.person.Person;
-import edu.miu.cs544.moe.emr.domain.role.Role;
+import edu.miu.cs544.moe.emr.domain.shared.enums.Role;
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@DiscriminatorValue("user")
 @Table(name = "users")
-public class User extends Person implements UserDetails {
+@Setter
+@Getter
+@NoArgsConstructor
+public class User extends Person {
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Role> roles = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
-    public User() {
-    }
-
-    public User(String username, String password, String name) {
-        this.username = username;
-        this.password = password;
+    public User(String name, String username, String password, Role role) {
         this.setName(name);
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public List<Role> getAuthorities() {
-        return this.roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
+        this.role = role;
     }
 }
