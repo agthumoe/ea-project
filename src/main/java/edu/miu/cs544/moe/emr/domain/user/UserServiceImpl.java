@@ -4,17 +4,15 @@ import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.exception.UnauthorizedException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
-import edu.miu.cs544.moe.emr.domain.user.dto.CreateUser;
-import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUser;
+import edu.miu.cs544.moe.emr.domain.user.dto.CreateUserRequest;
+import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUserRequest;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse create(CreateUser dto) {
+    public UserResponse create(CreateUserRequest dto) {
         User user = this.mapper.map(dto, User.class);
         user.setPassword(this.passwordEncoder.encode(dto.getPassword()));
         return this.mapper.map(this.repository.save(user), UserResponse.class);
@@ -47,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResponse update(Long id, UpdateUser dto) {
+    public UserResponse update(Long id, UpdateUserRequest dto) {
         User user = this.repository.findById(id).orElseThrow(() -> new NotFoundException(messageSource.getMessage("user.exceptions.notFound", null)));
         this.mapper.map(dto, user);
         this.repository.save(user);

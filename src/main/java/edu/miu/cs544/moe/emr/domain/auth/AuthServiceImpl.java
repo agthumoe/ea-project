@@ -3,7 +3,7 @@ package edu.miu.cs544.moe.emr.domain.auth;
 import edu.miu.cs544.moe.emr.domain.auth.dto.*;
 import edu.miu.cs544.moe.emr.domain.user.User;
 import edu.miu.cs544.moe.emr.domain.user.UserRepository;
-import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUser;
+import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUserRequest;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import edu.miu.cs544.moe.emr.exception.UnauthorizedException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
@@ -70,10 +70,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public UserResponse updateProfile(UpdateUser updateUser) {
+    public UserResponse updateProfile(UpdateUserRequest updateUserRequest) {
         String username = SecurityUtils.getPrinciple();
         User user = this.userRepository.findByUsernameIgnoreCase(username).orElseThrow(() -> new UnauthorizedException(this.messageProvider.getMessage("user.exceptions.notFound", null)));
-        user.setName(updateUser.getName());
+        user.setName(updateUserRequest.getName());
         this.userRepository.save(user);
         return this.mapper.map(user, UserResponse.class);
     }

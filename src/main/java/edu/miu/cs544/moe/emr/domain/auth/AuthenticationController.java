@@ -1,7 +1,7 @@
 package edu.miu.cs544.moe.emr.domain.auth;
 
 import edu.miu.cs544.moe.emr.domain.auth.dto.*;
-import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUser;
+import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUserRequest;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class AuthenticationController {
     @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/profile")
-    public UserResponse updateProfile(@RequestBody @Validated UpdateUser user) {
+    public UserResponse updateProfile(@RequestBody @Validated UpdateUserRequest user) {
         return this.authService.updateProfile(user);
     }
 
