@@ -1,20 +1,13 @@
 package edu.miu.cs544.moe.emr.domain.person;
 
 import edu.miu.cs544.moe.emr.domain.shared.model.MutableModel;
-import jakarta.persistence.*;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "type")
-@Table(name = "persons")
+@Setter
+@Getter
+@MappedSuperclass
 public class Person extends MutableModel {
     private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

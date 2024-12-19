@@ -1,30 +1,30 @@
 package edu.miu.cs544.moe.emr.domain.user;
 
 import edu.miu.cs544.moe.emr.domain.person.Person;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import edu.miu.cs544.moe.emr.domain.shared.enums.Role;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@DiscriminatorValue("user")
 @Table(name = "users")
+@Setter
+@Getter
+@NoArgsConstructor
 public class User extends Person {
+    @Column(nullable = false, unique = true)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public User(String name, String username, String password, Role role) {
+        this.setName(name);
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
+        this.role = role;
     }
 }
