@@ -4,7 +4,7 @@ spring:
 logging:
   pattern:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){green} %clr([%thread]){magenta} %clr(%-5level){yellow} %clr(%logger{36}){blue} - %msg%n"
-application:
+app:
   title: @project.name@
   version: @project.version@
   description: @project.description@

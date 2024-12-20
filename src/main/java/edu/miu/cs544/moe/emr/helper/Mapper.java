@@ -34,14 +34,17 @@ public class Mapper extends ModelMapper {
         return (session) -> {
             MapMessage message = session.createMapMessage();
             message.setString("type", type.toString());
-            message.setString("uuid", visit.getUuid());
-            message.setString("patientName", visit.getPatient().getName());
-            message.setString("doctorName", visit.getDoctor().getName());
-            message.setString("date", visit.getVisitDate().toString());
-            message.setString("patientAge", visit.getPatient().getYears());
-            message.setString("complaint", visit.getComplaint());
-            message.setString("provisionalDiagnosis", visit.getProvisionalDiagnosis());
-            message.setString("finalDiagnosis", visit.getFinalDiagnosis());
+            message.setString("patient.uuid", visit.getPatient().getUuid());
+            message.setString("patient.name", visit.getPatient().getName());
+            message.setString("patient.age", visit.getPatient().getYears());
+            message.setString("doctor.uuid", visit.getDoctor().getUuid());
+            message.setString("doctor.name", visit.getDoctor().getName());
+            message.setString("doctor.speciality", visit.getDoctor().getSpeciality());
+            message.setString("visit.uuid", visit.getUuid());
+            message.setString("visit.date", visit.getVisitDate().toString());
+            message.setString("visit.complaint", visit.getComplaint());
+            message.setString("visit.provisionalDiagnosis", visit.getProvisionalDiagnosis());
+            message.setString("visit.finalDiagnosis", visit.getFinalDiagnosis());
             return message;
         };
     }

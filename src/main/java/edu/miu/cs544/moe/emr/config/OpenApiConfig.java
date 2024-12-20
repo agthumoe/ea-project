@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @OpenAPIDefinition(info = @Info(
-        title = "${application.title}",
-        description = "${application.description}",
-        version = "${application.version}",
+        title = "${app.title}",
+        description = "${app.description}",
+        version = "${app.version}",
         contact = @Contact(name = "Aung Thu Moe", email = "amoe@miu.edu")
 ))
 @SecurityScheme(
