@@ -16,6 +16,8 @@ import edu.miu.cs544.moe.emr.exception.BadRequestException;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
+import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
+import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +36,7 @@ public class InvestigationServiceImpl implements InvestigationService{
     private final VisitRepository visitRepository;
     private final Mapper mapper;
     private final LocaleMessageProvider messageProvider;
+    private final JmsMessageSender messageSender;
 
     @Override
     public Page<InvestigationResponse> getAll(Pageable pageable) {
@@ -57,7 +60,9 @@ public class InvestigationServiceImpl implements InvestigationService{
         Visit visit = this.visitRepository.findById(visitId).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("visit.exceptions.notFound", null)));
         investigation.setUuid(UUID.randomUUID().toString());
         investigation.setVisit(visit);
-        return this.mapper.map(this.quantitativeInvestigationRepository.save(investigation), QuantitativeInvestigationWithVisitResponse.class);
+        investigation = this.quantitativeInvestigationRepository.save(investigation);
+        this.messageSender.send(investigation, MessageType.CREATE);
+        return this.mapper.map(investigation, QuantitativeInvestigationWithVisitResponse.class);
     }
 
     @Override
@@ -66,7 +71,9 @@ public class InvestigationServiceImpl implements InvestigationService{
         Visit visit = this.visitRepository.findById(visitId).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("visit.exceptions.notFound", null)));
         investigation.setUuid(UUID.randomUUID().toString());
         investigation.setVisit(visit);
-        return this.mapper.map(this.descriptiveInvestigationRepository.save(investigation), DescriptiveInvestigationWithVisitResponse.class);
+        investigation = this.descriptiveInvestigationRepository.save(investigation);
+        this.messageSender.send(investigation, MessageType.CREATE);
+        return this.mapper.map(investigation, DescriptiveInvestigationWithVisitResponse.class);
     }
 
     @Override
@@ -74,7 +81,9 @@ public class InvestigationServiceImpl implements InvestigationService{
     public QuantitativeInvestigationWithVisitResponse updateQuantitativeInvestigation(Long id, QuantitativeInvestigationRequest request) {
         QuantitativeInvestigation investigation = this.quantitativeInvestigationRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("investigation.exceptions.notFound", null)));
         this.mapper.map(request, investigation);
-        return this.mapper.map(this.quantitativeInvestigationRepository.save(investigation), QuantitativeInvestigationWithVisitResponse.class);
+        investigation = this.quantitativeInvestigationRepository.save(investigation);
+        this.messageSender.send(investigation, MessageType.UPDATE);
+        return this.mapper.map(investigation, QuantitativeInvestigationWithVisitResponse.class);
     }
 
     @Override
@@ -82,7 +91,9 @@ public class InvestigationServiceImpl implements InvestigationService{
     public DescriptiveInvestigationWithVisitResponse updateDescriptiveInvestigation(Long id, DescriptiveInvestigationRequest request) {
         DescriptiveInvestigation investigation = this.descriptiveInvestigationRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("investigation.exceptions.notFound", null)));
         this.mapper.map(request, investigation);
-        return this.mapper.map(this.descriptiveInvestigationRepository.save(investigation), DescriptiveInvestigationWithVisitResponse.class);
+        investigation = this.descriptiveInvestigationRepository.save(investigation);
+        this.messageSender.send(investigation, MessageType.UPDATE);
+        return this.mapper.map(investigation, DescriptiveInvestigationWithVisitResponse.class);
     }
 
     @Override

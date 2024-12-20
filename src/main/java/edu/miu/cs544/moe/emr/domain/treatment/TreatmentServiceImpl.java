@@ -8,6 +8,8 @@ import edu.miu.cs544.moe.emr.domain.visit.VisitRepository;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
+import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
+import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     private final VisitRepository visitRepository;
     private final Mapper mapper;
     private final LocaleMessageProvider messageProvider;
+    private final JmsMessageSender messageSender;
 
     @Override
     @Transactional
@@ -31,7 +34,9 @@ public class TreatmentServiceImpl implements TreatmentService {
         Visit visit = this.visitRepository.findById(visitId).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("visit.exceptions.notFound", null)));
         treatment.setUuid(UUID.randomUUID().toString());
         treatment.setVisit(visit);
-        return this.mapper.map(this.treatmentRepository.save(treatment), TreatmentResponse.class);
+        treatment = this.treatmentRepository.save(treatment);
+        this.messageSender.send(treatment, MessageType.CREATE);
+        return this.mapper.map(treatment, TreatmentResponse.class);
     }
 
     @Override
@@ -39,7 +44,9 @@ public class TreatmentServiceImpl implements TreatmentService {
     public TreatmentResponse update(Long id, TreatmentRequest request) {
         Treatment treatment = this.treatmentRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("treatment.exceptions.notFound", null)));
         this.mapper.map(request, treatment);
-        return this.mapper.map(this.treatmentRepository.save(treatment), TreatmentResponse.class);
+        treatment = this.treatmentRepository.save(treatment);
+        this.messageSender.send(treatment, MessageType.UPDATE);
+        return this.mapper.map(treatment, TreatmentResponse.class);
     }
 
     @Override

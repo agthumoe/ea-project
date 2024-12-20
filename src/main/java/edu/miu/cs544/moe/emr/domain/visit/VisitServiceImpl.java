@@ -9,6 +9,8 @@ import edu.miu.cs544.moe.emr.domain.visit.dto.VisitResponse;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
+import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
+import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,7 @@ public class VisitServiceImpl implements VisitService {
     private final DoctorRepository doctorRepository;
     private final Mapper mapper;
     private final LocaleMessageProvider messageProvider;
+    private final JmsMessageSender messageSender;
 
     @Override
     public Page<VisitResponse> getAll(Pageable pageable) {
@@ -51,7 +54,9 @@ public class VisitServiceImpl implements VisitService {
         visit.setUuid(UUID.randomUUID().toString());
         visit.setPatient(patient);
         visit.setDoctor(doctor);
-        return this.mapper.map(this.visitRepository.save(visit), VisitResponse.class);
+        visit = this.visitRepository.save(visit);
+        this.messageSender.send(visit, MessageType.CREATE);
+        return this.mapper.map(visit, VisitResponse.class);
     }
 
     @Transactional
@@ -63,7 +68,9 @@ public class VisitServiceImpl implements VisitService {
         visit.setPatient(patient);
         visit.setDoctor(doctor);
         this.mapper.map(request, visit);
-        return this.mapper.map(this.visitRepository.save(visit), VisitResponse.class);
+        visit = this.visitRepository.save(visit);
+        this.messageSender.send(visit, MessageType.UPDATE);
+        return this.mapper.map(visit, VisitResponse.class);
     }
 
     @Override

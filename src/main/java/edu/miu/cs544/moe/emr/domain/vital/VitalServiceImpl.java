@@ -2,12 +2,13 @@ package edu.miu.cs544.moe.emr.domain.vital;
 
 import edu.miu.cs544.moe.emr.domain.visit.Visit;
 import edu.miu.cs544.moe.emr.domain.visit.VisitRepository;
-import edu.miu.cs544.moe.emr.domain.visit.dto.VisitResponse;
 import edu.miu.cs544.moe.emr.domain.vital.dto.VitalRequest;
 import edu.miu.cs544.moe.emr.domain.vital.dto.VitalResponse;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
+import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
+import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ public class VitalServiceImpl implements VitalService {
     private final VisitRepository visitRepository;
     private final Mapper mapper;
     private final LocaleMessageProvider messageProvider;
+    private final JmsMessageSender messageSender;
 
     @Override
     public Page<VitalResponse> getAll(Pageable pageable) {
@@ -50,7 +52,9 @@ public class VitalServiceImpl implements VitalService {
         Vital vital = this.mapper.map(request, Vital.class);
         Visit visit = this.visitRepository.findById(visitId).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("visit.exceptions.notFound", null)));
         vital.setVisit(visit);
-        return this.mapper.map(this.vitalRepository.save(vital), VitalResponse.class);
+        vital = this.vitalRepository.save(vital);
+        this.messageSender.send(vital, MessageType.CREATE);
+        return this.mapper.map(vital, VitalResponse.class);
     }
 
     @Override
@@ -58,7 +62,9 @@ public class VitalServiceImpl implements VitalService {
     public VitalResponse update(Long id, VitalRequest request) {
         Vital vital = this.vitalRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("vital.exceptions.notFound", null)));
         this.mapper.map(request, vital);
-        return this.mapper.map(this.vitalRepository.save(vital), VitalResponse.class);
+        vital = this.vitalRepository.save(vital);
+        this.messageSender.send(vital, MessageType.UPDATE);
+        return this.mapper.map(vital, VitalResponse.class);
     }
 
     @Override
