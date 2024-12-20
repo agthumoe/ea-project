@@ -2,8 +2,8 @@ package edu.miu.cs544.moe.emr.domain.visit;
 
 import edu.miu.cs544.moe.emr.domain.doctor.Doctor;
 import edu.miu.cs544.moe.emr.domain.investigation.Investigation;
-import edu.miu.cs544.moe.emr.domain.note.Note;
 import edu.miu.cs544.moe.emr.domain.patient.Patient;
+import edu.miu.cs544.moe.emr.domain.treatment.Treatment;
 import edu.miu.cs544.moe.emr.domain.vital.Vital;
 import edu.miu.cs544.moe.emr.shared.model.MutableModel;
 import jakarta.persistence.*;
@@ -43,4 +43,6 @@ public class Visit extends MutableModel {
     private List<Vital> vitals = new ArrayList<>();
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
     private List<Investigation> investigations = new ArrayList<>();
+    @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
+    private List<Treatment> treatments = new ArrayList<>();
 }

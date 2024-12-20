@@ -10,6 +10,8 @@ import lombok.Setter;
 @Getter
 @MappedSuperclass
 public class Person extends MutableModel {
+    @Column(nullable = false, unique = true, updatable = false)
+    private String uuid;
     @Column(nullable = false)
     private String name;
 }

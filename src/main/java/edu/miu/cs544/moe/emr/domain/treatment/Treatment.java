@@ -15,10 +15,13 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class Treatment extends MutableModel {
+    @Column(nullable = false, unique = true, updatable = false)
     private String uuid;
     @Column(name = "treatment_date", nullable = false)
     private LocalDateTime treatmentDate;
+    @Column(nullable = false)
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String details;
     @ManyToOne
     @JoinColumn(nullable = false)

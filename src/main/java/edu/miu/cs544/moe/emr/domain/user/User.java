@@ -1,6 +1,7 @@
 package edu.miu.cs544.moe.emr.domain.user;
 
 import edu.miu.cs544.moe.emr.domain.person.Person;
+import edu.miu.cs544.moe.emr.shared.model.MutableModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class User extends Person {
+public class User extends MutableModel {
+    @Column(nullable = false)
+    private String name;
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)

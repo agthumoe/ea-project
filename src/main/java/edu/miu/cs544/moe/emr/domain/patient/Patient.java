@@ -19,8 +19,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Patient extends Person {
-    @Column(nullable = false, unique = true, updatable = false)
-    private String uuid;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
