@@ -2,10 +2,7 @@ package edu.miu.cs544.moe.emr.domain.vital;
 
 import edu.miu.cs544.moe.emr.domain.visit.Visit;
 import edu.miu.cs544.moe.emr.shared.model.MutableModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,17 +27,18 @@ public class Vital extends MutableModel {
     private Float randomBloodSugar;
     @Column(name = "fasting_blood_sugar")
     private Float fastingBloodSugar;
-    @ManyToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Visit visit;
 
-    public Vital(Integer pulseRate, Integer respiratoryRate, Integer systolicBloodPressure, Integer diastolicBloodPressure, Float temperature, Float spo2, Float randomBloodSugar, Float fastingBloodSugar) {
+    public Vital(Float spo2, Integer pulseRate, Integer respiratoryRate, Integer systolicBloodPressure, Integer diastolicBloodPressure, Float temperature, Float randomBloodSugar, Float fastingBloodSugar, Visit visit) {
+        this.spo2 = spo2;
         this.pulseRate = pulseRate;
         this.respiratoryRate = respiratoryRate;
         this.systolicBloodPressure = systolicBloodPressure;
         this.diastolicBloodPressure = diastolicBloodPressure;
         this.temperature = temperature;
-        this.spo2 = spo2;
         this.randomBloodSugar = randomBloodSugar;
         this.fastingBloodSugar = fastingBloodSugar;
+        this.visit = visit;
     }
 }

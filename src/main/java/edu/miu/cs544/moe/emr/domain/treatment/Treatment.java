@@ -23,7 +23,7 @@ public class Treatment extends MutableModel {
     private String name;
     @Column(columnDefinition = "TEXT")
     private String details;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Visit visit;
 }

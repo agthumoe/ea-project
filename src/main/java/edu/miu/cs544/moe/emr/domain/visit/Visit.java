@@ -39,8 +39,8 @@ public class Visit extends MutableModel {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Patient patient;
-    @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
-    private List<Vital> vitals = new ArrayList<>();
+    @OneToOne(mappedBy = "visit", cascade = CascadeType.ALL)
+    private Vital vital;
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
     private List<Investigation> investigations = new ArrayList<>();
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
