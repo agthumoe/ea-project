@@ -1,6 +1,6 @@
 package edu.miu.cs544.moe.emr.helper;
 
-import edu.miu.cs544.moe.emr.domain.shared.enums.Role;
+import edu.miu.cs544.moe.emr.domain.user.Role;
 import edu.miu.cs544.moe.emr.domain.user.User;
 import edu.miu.cs544.moe.emr.domain.user.UserRepository;
 import org.slf4j.Logger;

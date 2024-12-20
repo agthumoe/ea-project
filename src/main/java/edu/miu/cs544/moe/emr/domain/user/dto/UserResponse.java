@@ -1,16 +1,14 @@
 package edu.miu.cs544.moe.emr.domain.user.dto;
 
-import lombok.Data;
+import edu.miu.cs544.moe.emr.shared.dto.Dto;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDateTime;
-
-@Data
-public class UserResponse {
-    private Long id;
-    private LocalDateTime createdDate;
-    private String createdBy;
-    private LocalDateTime lastModifiedDate;
-    private String lastModifiedBy;
+@Setter
+@Getter
+@ToString
+public class UserResponse extends Dto {
     private String name;
     private String username;
 }

@@ -1,6 +1,6 @@
-package edu.miu.cs544.moe.emr.domain.shared;
+package edu.miu.cs544.moe.emr.shared.repository;
 
-import edu.miu.cs544.moe.emr.domain.shared.model.Model;
+import edu.miu.cs544.moe.emr.shared.model.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 

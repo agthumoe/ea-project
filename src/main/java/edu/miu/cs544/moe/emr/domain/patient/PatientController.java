@@ -1,28 +1,36 @@
 package edu.miu.cs544.moe.emr.domain.patient;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.miu.cs544.moe.emr.domain.patient.dto.PatientRequest;
+import edu.miu.cs544.moe.emr.domain.patient.dto.PatientResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/patients")
+@AllArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
+@ApiResponse(content = {@Content(mediaType = "application/json"), @Content(mediaType = "application/xml")})
 public class PatientController {
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
 
     @GetMapping
-    public List<Patient> getAllPatients() {
-        return this.patientService.getAllPatients();
+    public Page<PatientResponse> getAllPatients(Pageable pageable) {
+        return this.patientService.getAll(pageable);
     }
 
     @GetMapping("{id}")
-    public Patient getOne(@PathVariable Long id) {
-        return this.patientService.getOnePatient(id).orElseThrow(() -> new RuntimeException("Not found"));
+    public PatientResponse getOne(@PathVariable Long id) {
+        return this.patientService.getOne(id);
     }
 
     @PostMapping
-    public Patient create(@RequestBody Patient patient) {
+    public PatientResponse create(@RequestBody @Validated PatientRequest patient) {
         return this.patientService.create(patient);
     }
 

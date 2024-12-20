@@ -1,4 +1,4 @@
-package edu.miu.cs544.moe.emr.domain.shared.enums;
+package edu.miu.cs544.moe.emr.domain.user;
 
 public enum Role {
     ROLE_ADMIN,

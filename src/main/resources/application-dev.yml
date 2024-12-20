@@ -16,3 +16,6 @@ app:
       expiration: 86400000 # 1 day
       refresh-token:
         expiration: 604800000 # 7 days
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

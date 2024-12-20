@@ -1,7 +1,6 @@
 package edu.miu.cs544.moe.emr.domain.user;
 
 import edu.miu.cs544.moe.emr.domain.person.Person;
-import edu.miu.cs544.moe.emr.domain.shared.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

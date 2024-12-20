@@ -1,6 +1,8 @@
 package edu.miu.cs544.moe.emr.helper;
 
 import edu.miu.cs544.moe.emr.exception.HttpStatusException;
+import edu.miu.cs544.moe.emr.shared.dto.ErrorResponse;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice(annotations = RestController.class, basePackages = "edu.miu.project.controllers")
+@Hidden
+@ControllerAdvice(annotations = RestController.class, basePackages = "edu.miu.cs544.moe.emr")
 public class GlobalExceptionHandler {
     @ExceptionHandler(HttpStatusException.class)
     public ResponseEntity<?> handleConflict(HttpStatusException ex) {

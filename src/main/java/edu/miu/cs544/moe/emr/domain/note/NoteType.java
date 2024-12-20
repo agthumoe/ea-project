@@ -1,0 +1,12 @@
+package edu.miu.cs544.moe.emr.domain.note;
+
+public enum NoteType {
+    HISTORY_OF_PRESENT_COMPLAINT,
+    PAST_MEDICAL_HISTORY,
+    FAMILY_HISTORY,
+    SOCIAL_HISTORY,
+    SURGICAL_HISTORY,
+    DRUG_HISTORY,
+    REVIEW_OF_SYSTEMS,
+    PHYSICAL_EXAMINATION,
+}

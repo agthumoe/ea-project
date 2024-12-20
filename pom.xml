@@ -11,8 +11,8 @@
 	<groupId>edu.miu.cs544.moe</groupId>
 	<artifactId>emr</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ea-project</name>
-	<description>Electronic Medical Record</description>
+	<name>Simple EMR</name>
+	<description>RESTful API for managing electronic medical records, enabling efficient storage, retrieval, and updates of patient data.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -90,6 +90,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>annotationProcessor</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 	</dependencies>
 

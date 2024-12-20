@@ -1,4 +1,4 @@
-package edu.miu.cs544.moe.emr.domain.shared.model;
+package edu.miu.cs544.moe.emr.shared.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
