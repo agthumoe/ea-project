@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,12 +41,12 @@ public class TreatmentController {
     }
 
     @PostMapping("/visits/{visitId}/treatments")
-    public TreatmentResponse create(@PathVariable Long visitId, TreatmentRequest request) {
+    public TreatmentResponse create(@PathVariable Long visitId, @RequestBody @Validated TreatmentRequest request) {
         return this.treatmentService.create(visitId, request);
     }
 
     @PutMapping("/treatments/{id}")
-    public TreatmentResponse update(@PathVariable Long id, TreatmentRequest request) {
+    public TreatmentResponse update(@PathVariable Long id, @RequestBody @Validated TreatmentRequest request) {
         return this.treatmentService.update(id, request);
     }
 

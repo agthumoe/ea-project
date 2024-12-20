@@ -28,6 +28,7 @@ public class Vital extends MutableModel {
     @Column(name = "fasting_blood_sugar")
     private Float fastingBloodSugar;
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, updatable = false, unique = true)
     private Visit visit;
 
     public Vital(Float spo2, Integer pulseRate, Integer respiratoryRate, Integer systolicBloodPressure, Integer diastolicBloodPressure, Float temperature, Float randomBloodSugar, Float fastingBloodSugar, Visit visit) {

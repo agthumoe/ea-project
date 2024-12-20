@@ -1,6 +1,7 @@
 package edu.miu.cs544.moe.emr.domain.auth;
 
 import edu.miu.cs544.moe.emr.domain.auth.dto.*;
+import edu.miu.cs544.moe.emr.domain.user.Role;
 import edu.miu.cs544.moe.emr.domain.user.User;
 import edu.miu.cs544.moe.emr.domain.user.UserRepository;
 import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUserRequest;
@@ -32,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserResponse register(RegisterUser registerUser) {
         User user = this.mapper.map(registerUser, User.class);
+        user.setRole(Role.ROLE_NURSE);
         user.setPassword(this.passwordEncoder.encode(registerUser.getPassword()));
         return this.mapper.map(this.userRepository.save(user), UserResponse.class);
     }

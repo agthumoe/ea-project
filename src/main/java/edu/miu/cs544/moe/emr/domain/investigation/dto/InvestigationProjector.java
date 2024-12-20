@@ -9,7 +9,7 @@ public interface InvestigationProjector {
     LocalDateTime getLastModifiedDate();
     String getLastModifiedBy();
     String getUuid();
-    String getType();
+    Class<?> getDiscriminator();
     LocalDateTime getInvestigationDate();
     String getInvestigationName();
     String getOpinion();

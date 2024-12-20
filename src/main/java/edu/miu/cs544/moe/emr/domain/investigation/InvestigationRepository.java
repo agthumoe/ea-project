@@ -12,14 +12,14 @@ import java.util.Optional;
 
 @Repository
 public interface InvestigationRepository extends CoreRepository<Investigation> {
-    @Query("select i, type(i) as type from Investigation i")
-    Page<InvestigationProjector> getAll(Pageable pageable);
+    @Query("select i from Investigation i")
+    Page<Investigation> getAll(Pageable pageable);
 
-    @Query("select i, type(i) as type from Investigation i where i.visit.id = :visitId")
-    Page<InvestigationProjector> getByVisit(Long visitId, Pageable pageable);
+    @Query("select i from Investigation i where i.visit.id = :visitId")
+    Page<Investigation> getByVisit(Long visitId, Pageable pageable);
 
-    @Query("select i, type(i) as type from Investigation i where i.visit.patient.id = :patientId")
-    Page<InvestigationProjector> getByPatient(Long patientId, Pageable pageable);
+    @Query("select i from Investigation i where i.visit.patient.id = :patientId")
+    Page<Investigation> getByPatient(Long patientId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"visit"})
     Optional<Investigation> findById(Long id);

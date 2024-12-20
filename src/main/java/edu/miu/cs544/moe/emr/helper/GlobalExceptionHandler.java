@@ -34,11 +34,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(401).body(errors);
     }
 
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ErrorResponse handleIntegrityViolation(DataIntegrityViolationException ex) {
-//        return new ErrorResponse(400, ex.getMostSpecificCause().getMessage());
-//    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleIntegrityViolation(DataIntegrityViolationException ex) {
+        return ResponseEntity.status(400).body(new ErrorResponse(400, ex.getMostSpecificCause().getMessage()));
+    }
 //
 //    @ExceptionHandler(BadCredentialsException.class)
 //    @ResponseStatus(HttpStatus.UNAUTHORIZED)
