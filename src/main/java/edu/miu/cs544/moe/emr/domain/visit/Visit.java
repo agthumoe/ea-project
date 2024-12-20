@@ -27,16 +27,20 @@ public class Visit extends MutableModel {
     private String complaint;
     @Column(name = "visit_date", nullable = false)
     private LocalDateTime visitDate;
+    @Column(columnDefinition = "TEXT")
+    private String notes;
+    @Column(name = "provisional_diagnosis")
+    private String provisionalDiagnosis;
+    @Column(name = "final_diagnosis")
+    private String finalDiagnosis;
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Doctor doctor;
     @ManyToOne
     @JoinColumn(nullable = false)
     private Patient patient;
-    private String diagnosis;
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
     private List<Vital> vitals = new ArrayList<>();
-    @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
-    private List<Note> notes = new ArrayList<>();
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
     private List<Investigation> investigations = new ArrayList<>();
 }

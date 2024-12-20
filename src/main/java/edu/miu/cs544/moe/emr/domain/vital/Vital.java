@@ -17,30 +17,28 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Vital extends MutableModel {
     @Column(name = "pulse_rate")
-    private int pulseRate;
+    private Integer pulseRate;
     @Column(name = "respiratory_rate")
-    private int respiratoryRate;
+    private Integer respiratoryRate;
     @Column(name = "systolic_blood_pressure")
-    private int systolicBloodPressure;
+    private Integer systolicBloodPressure;
     @Column(name = "diastolic_blood_pressure")
-    private int diastolicBloodPressure;
-    private float temperature;
-    private float weight;
-    private float spo2;
+    private Integer diastolicBloodPressure;
+    private Float temperature;
+    private Float spo2;
     @Column(name = "random_blood_sugar")
-    private float randomBloodSugar;
+    private Float randomBloodSugar;
     @Column(name = "fasting_blood_sugar")
-    private float fastingBloodSugar;
+    private Float fastingBloodSugar;
     @ManyToOne
     private Visit visit;
 
-    public Vital(int pulseRate, int respiratoryRate, int systolicBloodPressure, int diastolicBloodPressure, float temperature, float weight, float spo2, float randomBloodSugar, float fastingBloodSugar) {
+    public Vital(Integer pulseRate, Integer respiratoryRate, Integer systolicBloodPressure, Integer diastolicBloodPressure, Float temperature, Float spo2, Float randomBloodSugar, Float fastingBloodSugar) {
         this.pulseRate = pulseRate;
         this.respiratoryRate = respiratoryRate;
         this.systolicBloodPressure = systolicBloodPressure;
         this.diastolicBloodPressure = diastolicBloodPressure;
         this.temperature = temperature;
-        this.weight = weight;
         this.spo2 = spo2;
         this.randomBloodSugar = randomBloodSugar;
         this.fastingBloodSugar = fastingBloodSugar;
