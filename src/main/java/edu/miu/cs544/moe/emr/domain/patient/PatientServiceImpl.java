@@ -5,11 +5,14 @@ import edu.miu.cs544.moe.emr.domain.patient.dto.PatientResponse;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 
 @Service
@@ -33,6 +36,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientResponse create(PatientRequest patient) {
         Patient entity = this.mapper.map(patient, Patient.class);
+        entity.setUuid(UUID.randomUUID().toString());
         this.repository.save(entity);
         return this.mapper.map(entity, PatientResponse.class);
     }

@@ -8,6 +8,8 @@ import edu.miu.cs544.moe.emr.exception.UnauthorizedException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +25,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public List<UserResponse> getAll() {
-        return this.mapper.map(this.repository.findAll(), UserResponse.class);
+    public Page<UserResponse> getAll(Pageable pageable) {
+        return this.mapper.map(this.repository.findAll(pageable), UserResponse.class);
     }
 
     @Override

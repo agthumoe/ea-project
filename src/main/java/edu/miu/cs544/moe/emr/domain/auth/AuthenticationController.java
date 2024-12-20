@@ -4,16 +4,18 @@ import edu.miu.cs544.moe.emr.domain.auth.dto.*;
 import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUserRequest;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public UserResponse register(@RequestBody @Validated RegisterUser user) {

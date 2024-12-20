@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers(whiteLists).permitAll()
                         .requestMatchers(HttpMethod.POST, publicPostEndpoints).permitAll()
                         .requestMatchers(HttpMethod.GET, publicGetEndpoints).permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)

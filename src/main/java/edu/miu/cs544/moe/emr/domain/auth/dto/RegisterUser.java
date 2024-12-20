@@ -5,10 +5,10 @@ import lombok.Data;
 
 @Data
 public class RegisterUser {
-    @NotBlank
+    @NotBlank(message = "{user.validations.name.required}")
     private String name;
-    @NotBlank
+    @NotBlank(message = "{user.validations.username.required}")
     private String username;
-    @NotBlank
+    @NotBlank(message = "{user.validations.password.required}")
     private String password;
 }

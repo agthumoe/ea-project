@@ -5,9 +5,13 @@ import edu.miu.cs544.moe.emr.domain.patient.Gender;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Setter
+@Getter
 public class PatientRequest {
     @NotBlank(message = "{patient.validations.name.required}")
     private String name;

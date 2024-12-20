@@ -5,6 +5,8 @@ import edu.miu.cs544.moe.emr.domain.user.dto.UpdateUserRequest;
 import edu.miu.cs544.moe.emr.domain.user.dto.UserResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +27,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> getAllUsers() {
-        return this.userService.getAll();
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        return this.userService.getAll(pageable);
     }
 
     @GetMapping("{id}")

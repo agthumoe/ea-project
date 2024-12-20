@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Visit extends MutableModel {
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String uuid;
     @Column(nullable = false)
     private String complaint;

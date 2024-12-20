@@ -19,9 +19,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Doctor extends Person {
-    private String specialization;
+    @Column(nullable = false, unique = true, updatable = false)
+    private String uuid;
+    private String speciality;
     @Column(name = "license_number", nullable = false, unique = true)
     private String licenseNumber;
+    private String phone;
     @OneToMany(mappedBy = "doctor")
     private List<Visit> visits = new ArrayList<>();
 }
