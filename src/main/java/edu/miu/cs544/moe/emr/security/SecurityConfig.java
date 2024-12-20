@@ -78,7 +78,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authenticationEntryPoint())
                 ); // handle forbidden error and serialize the response
         // this is required to disable the frame options for h2-console, otherwise h2-console cannot be properly displayed
-        if (Arrays.asList(environment.getActiveProfiles()).contains("h2")) {
+        if (Arrays.asList(environment.getActiveProfiles()).contains("dev")) {
             http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         }
         return http.build();
