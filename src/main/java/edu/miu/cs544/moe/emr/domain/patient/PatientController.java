@@ -22,8 +22,20 @@ public class PatientController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public Page<PatientResponse> getAllPatients(Pageable pageable) {
-        return this.patientService.getAll(pageable);
+    public Page<PatientResponse> getAllPatients(
+            @RequestParam(required = false) String uuid,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Gender gender,
+            @RequestParam(required = false) String phone,
+            @RequestParam(required = false) Integer ageFrom,
+            @RequestParam(required = false) Integer ageTo,
+            @RequestParam(required = false) BloodGroup bloodGroup,
+            @RequestParam(required = false) String street,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String zipCode,
+            Pageable pageable) {
+        return this.patientService.getAll(uuid, name, gender, phone, ageFrom, ageTo, bloodGroup, street, city, state, zipCode, pageable);
     }
 
     @GetMapping("{id}")

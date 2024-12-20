@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserResponse register(RegisterUser registerUser) {
         User user = this.mapper.map(registerUser, User.class);
-        user.setRole(Role.ROLE_NURSE);
+        user.setRole(Role.ROLE_USER);
         user.setPassword(this.passwordEncoder.encode(registerUser.getPassword()));
         return this.mapper.map(this.userRepository.save(user), UserResponse.class);
     }

@@ -32,14 +32,14 @@ public class DoctorController {
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PostMapping
     public DoctorResponse create(@RequestBody @Validated DoctorRequest doctor) {
         return this.doctorService.create(doctor);
     }
 
     @SecurityRequirement(name = "bearerAuth")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @PutMapping("{id}")
     public DoctorResponse update(@PathVariable Long id, @RequestBody @Validated DoctorRequest doctor) {
         return this.doctorService.update(id, doctor);

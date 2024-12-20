@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PatientService {
-    Page<PatientResponse> getAll(Pageable pageable);
+    Page<PatientResponse> getAll(String uuid, String name, Gender gender, String phone, Integer ageFrom, Integer ageTo, BloodGroup bloodGroup, String street, String city, String state, String zipCode, Pageable pageable);
     PatientResponse getOne(Long id);
     PatientResponse create(PatientRequest patient);
     PatientResponse update(Long id, PatientRequest patient);
