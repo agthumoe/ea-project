@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,6 +28,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -42,7 +45,7 @@ public class SecurityConfig {
     private static final String[] publicGetEndpoints = {};
     @Value("${app.security.cors.origins}")
     private List<String> origins;
-
+    private final Environment environment;
     private final JwtAuthenticationFilter jwtFilter;
     private final ObjectMapper objectMapper;
     private final LocaleMessageProvider messageProvider;
@@ -74,6 +77,10 @@ public class SecurityConfig {
                         })
                         .authenticationEntryPoint(authenticationEntryPoint())
                 ); // handle forbidden error and serialize the response
+        // this is required to disable the frame options for h2-console, otherwise h2-console cannot be properly displayed
+        if (Arrays.asList(environment.getActiveProfiles()).contains("h2")) {
+            http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+        }
         return http.build();
     }
 

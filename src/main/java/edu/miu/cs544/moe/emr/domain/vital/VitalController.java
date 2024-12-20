@@ -43,19 +43,19 @@ public class VitalController {
         return this.vitalService.getOneByVisitId(visitId);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @PostMapping("/visits/{visitId}/vitals")
     public VitalResponse create(@PathVariable Long visitId, VitalRequest request) {
         return this.vitalService.create(visitId, request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @PutMapping("/vitals/{id}")
     public VitalResponse update(@PathVariable Long id, VitalRequest request) {
         return this.vitalService.update(id, request);
     }
 
-    @PreAuthorize("hasRole('ROLE_DOCTOR')")
+    @PreAuthorize("hasRole('ROLE_PRACTITIONER')")
     @DeleteMapping("/vitals/{id}")
     public void delete(@PathVariable Long id) {
         this.vitalService.delete(id);

@@ -8,14 +8,14 @@ import edu.miu.cs544.moe.emr.domain.visit.VisitRepository;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
-import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
-import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -25,7 +25,6 @@ public class TreatmentServiceImpl implements TreatmentService {
     private final VisitRepository visitRepository;
     private final Mapper mapper;
     private final LocaleMessageProvider messageProvider;
-    private final JmsMessageSender messageSender;
 
     @Override
     @Transactional
@@ -35,7 +34,6 @@ public class TreatmentServiceImpl implements TreatmentService {
         treatment.setUuid(UUID.randomUUID().toString());
         treatment.setVisit(visit);
         treatment = this.treatmentRepository.save(treatment);
-        this.messageSender.send(treatment, MessageType.CREATE);
         return this.mapper.map(treatment, TreatmentResponse.class);
     }
 
@@ -45,7 +43,6 @@ public class TreatmentServiceImpl implements TreatmentService {
         Treatment treatment = this.treatmentRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("treatment.exceptions.notFound", null)));
         this.mapper.map(request, treatment);
         treatment = this.treatmentRepository.save(treatment);
-        this.messageSender.send(treatment, MessageType.UPDATE);
         return this.mapper.map(treatment, TreatmentResponse.class);
     }
 
@@ -61,8 +58,33 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public Page<TreatmentResponse> getAll(Pageable pageable) {
-        return this.mapper.map(this.treatmentRepository.findAll(pageable), TreatmentResponse.class);
+    public Page<TreatmentResponse> getAll(String patientName, String patientUuid, String visitUuid, LocalDate visitBefore, LocalDate visitAfter, String uuid, String name, String description, Pageable pageable) {
+        Specification<Treatment> spec = Specification.where(null);
+        if (patientName != null) {
+            spec = spec.and(TreatmentSpecification.hasPatientName(patientName));
+        }
+        if (patientUuid != null) {
+            spec = spec.and(TreatmentSpecification.hasPatientUuid(patientUuid));
+        }
+        if (visitUuid != null) {
+            spec = spec.and(TreatmentSpecification.hasVisitUuid(visitUuid));
+        }
+        if (visitBefore != null) {
+            spec = spec.and(TreatmentSpecification.hasVisitBeforeDate(visitBefore));
+        }
+        if (visitAfter != null) {
+            spec = spec.and(TreatmentSpecification.hasVisitAfterDate(visitAfter));
+        }
+        if (uuid != null) {
+            spec = spec.and(TreatmentSpecification.hasUuid(uuid));
+        }
+        if (name != null) {
+            spec = spec.and(TreatmentSpecification.hasName(name));
+        }
+        if (description != null) {
+            spec = spec.and(TreatmentSpecification.hasDescription(description));
+        }
+        return this.mapper.map(this.treatmentRepository.findAll(spec, pageable), TreatmentResponse.class);
     }
 
     @Override

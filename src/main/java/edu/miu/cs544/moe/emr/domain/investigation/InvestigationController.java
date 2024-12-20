@@ -30,49 +30,49 @@ public class InvestigationController {
         return this.investigationService.getAll(pageable);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @GetMapping("/visit/{visitId}/investigations")
     public Page<InvestigationResponse> getByVisit(@PathVariable Long visitId, Pageable pageable) {
         return this.investigationService.getByVisit(visitId, pageable);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @GetMapping("/patient/{patientId}/investigations")
     public Page<InvestigationResponse> getByPatient(@PathVariable Long patientId, Pageable pageable) {
         return this.investigationService.getByPatient(patientId, pageable);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER')")
     @PostMapping("/visits/{visitId}/investigations/quantitative")
     public QuantitativeInvestigationWithVisitResponse createQuantitativeInvestigation(@PathVariable Long visitId, @RequestBody @Validated QuantitativeInvestigationRequest request) {
         return this.investigationService.createQuantitativeInvestigation(visitId, request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER')")
     @PostMapping("/visits/{visitId}/investigations/descriptive")
     public DescriptiveInvestigationWithVisitResponse createDescriptiveInvestigation(@PathVariable Long visitId, @RequestBody @Validated DescriptiveInvestigationRequest request) {
         return this.investigationService.createDescriptiveInvestigation(visitId, request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @GetMapping("/investigations/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id) {
         return ResponseEntity.ok(this.investigationService.findById(id).orElse(null));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @PutMapping("/investigations/{id}/quantitative")
     public QuantitativeInvestigationWithVisitResponse updateQuantitativeInvestigation(@PathVariable Long id, @RequestBody @Validated QuantitativeInvestigationRequest request) {
         return this.investigationService.updateQuantitativeInvestigation(id, request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @PutMapping("/investigations/{id}/descriptive")
     public DescriptiveInvestigationWithVisitResponse updateDescriptiveInvestigation(@PathVariable Long id, @RequestBody @Validated DescriptiveInvestigationRequest request) {
         return this.investigationService.updateDescriptiveInvestigation(id, request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER')")
     @DeleteMapping("/investigations/{id}")
     public void delete(@PathVariable Long id) {
         this.investigationService.delete(id);

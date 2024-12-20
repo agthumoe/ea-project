@@ -14,6 +14,7 @@ import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +56,8 @@ public class VisitServiceImpl implements VisitService {
         visit.setPatient(patient);
         visit.setDoctor(doctor);
         visit = this.visitRepository.save(visit);
-        this.messageSender.send(visit, MessageType.CREATE);
+        MessageCreator jmsMessage = this.mapper.map(visit, MessageType.CREATE);
+        this.messageSender.send(jmsMessage);
         return this.mapper.map(visit, VisitResponse.class);
     }
 
@@ -69,7 +71,8 @@ public class VisitServiceImpl implements VisitService {
         visit.setDoctor(doctor);
         this.mapper.map(request, visit);
         visit = this.visitRepository.save(visit);
-        this.messageSender.send(visit, MessageType.UPDATE);
+        MessageCreator jmsMessage = this.mapper.map(visit, MessageType.UPDATE);
+        this.messageSender.send(jmsMessage);
         return this.mapper.map(visit, VisitResponse.class);
     }
 

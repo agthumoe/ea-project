@@ -32,6 +32,8 @@ public class Patient extends Person {
     private Address address;
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Visit> visits = new ArrayList<>();
+    @Version
+    private int version;
 
     public Patient(String name, Gender gender, String phone, LocalDate dateOfBirth, BloodGroup bloodGroup, Address address) {
         this.setName(name);
@@ -61,5 +63,12 @@ public class Patient extends Person {
             parts.add(days + " day" + (days > 1 ? "s" : ""));
         }
         return String.join(", ", parts);
+    }
+
+    @Transient
+    public String getYears() {
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(dateOfBirth, now);
+        return String.valueOf(period.getYears());
     }
 }

@@ -38,19 +38,19 @@ public class VisitController {
         return this.visitService.getAllByPatientId(patientId, pageable);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @PostMapping("/visits")
     public VisitResponse create(@RequestBody @Validated VisitRequest request) {
         return this.visitService.create(request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
     @PutMapping("/visits/{id}")
     public VisitResponse update(@PathVariable Long id, @RequestBody @Validated VisitRequest request) {
         return this.visitService.update(id, request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_DOCTOR', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_ADMIN')")
     @DeleteMapping("/visits/{id}")
     public void delete(@PathVariable Long id) {
         this.visitService.delete(id);

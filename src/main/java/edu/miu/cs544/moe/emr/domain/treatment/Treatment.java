@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
+@NamedQuery(name = "Treatment.findById", query = "SELECT t FROM Treatment t WHERE t.id = :id", lockMode = LockModeType.PESSIMISTIC_READ)
 public class Treatment extends MutableModel {
     @Column(nullable = false, unique = true, updatable = false)
     private String uuid;
@@ -26,4 +27,6 @@ public class Treatment extends MutableModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Visit visit;
+    @Version
+    private int version;
 }

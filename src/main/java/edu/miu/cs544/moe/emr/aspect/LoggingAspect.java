@@ -1,6 +1,8 @@
 package edu.miu.cs544.moe.emr.aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,5 +24,10 @@ public class LoggingAspect {
         var object = joinPoint.proceed();
         logger.info("After Class: {}, Method: {}, with result: {}", joinPoint.getTarget().getClass().getSimpleName(), joinPoint.getSignature().getName(), object);
         return object;
+    }
+
+    @AfterThrowing(value = "serviceLogging()", throwing = "ex")
+    public void logException(JoinPoint joinPoint, Exception ex) {
+        logger.error("Exception in method {}, error: {}", joinPoint.getSignature(), ex.getMessage());
     }
 }

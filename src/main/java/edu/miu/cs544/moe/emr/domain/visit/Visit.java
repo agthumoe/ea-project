@@ -45,4 +45,6 @@ public class Visit extends MutableModel {
     private List<Investigation> investigations = new ArrayList<>();
     @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL)
     private List<Treatment> treatments = new ArrayList<>();
+    @Version
+    private int version;
 }

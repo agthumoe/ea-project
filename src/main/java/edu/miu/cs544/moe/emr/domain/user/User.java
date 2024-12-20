@@ -22,7 +22,8 @@ public class User extends MutableModel {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
+    @Version
+    private int version;
     public User(String name, String username, String password, Role role) {
         this.setName(name);
         this.username = username;

@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "investigation_type")
+@NamedQuery(name = "Investigation.findAllByVisitId", query = "SELECT i FROM Investigation i WHERE i.visit.id = :visitId")
 public abstract class Investigation extends MutableModel {
     @Column(nullable = false, unique = true)
     private String uuid;
@@ -27,4 +28,6 @@ public abstract class Investigation extends MutableModel {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Visit visit;
+    @Version
+    private int version;
 }

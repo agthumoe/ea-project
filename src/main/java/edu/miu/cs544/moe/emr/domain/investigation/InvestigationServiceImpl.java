@@ -16,8 +16,6 @@ import edu.miu.cs544.moe.emr.exception.BadRequestException;
 import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
-import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
-import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +34,6 @@ public class InvestigationServiceImpl implements InvestigationService{
     private final VisitRepository visitRepository;
     private final Mapper mapper;
     private final LocaleMessageProvider messageProvider;
-    private final JmsMessageSender messageSender;
 
     @Override
     public Page<InvestigationResponse> getAll(Pageable pageable) {
@@ -45,7 +42,7 @@ public class InvestigationServiceImpl implements InvestigationService{
 
     @Override
     public Page<InvestigationResponse> getByVisit(Long visitId, Pageable pageable) {
-        return this.mapper.map(this.investigationRepository.getByVisit(visitId, pageable), InvestigationResponse.class);
+        return this.mapper.map(this.investigationRepository.findAllByVisitId(visitId, pageable), InvestigationResponse.class);
     }
 
     @Override
@@ -61,7 +58,6 @@ public class InvestigationServiceImpl implements InvestigationService{
         investigation.setUuid(UUID.randomUUID().toString());
         investigation.setVisit(visit);
         investigation = this.quantitativeInvestigationRepository.save(investigation);
-        this.messageSender.send(investigation, MessageType.CREATE);
         return this.mapper.map(investigation, QuantitativeInvestigationWithVisitResponse.class);
     }
 
@@ -72,7 +68,6 @@ public class InvestigationServiceImpl implements InvestigationService{
         investigation.setUuid(UUID.randomUUID().toString());
         investigation.setVisit(visit);
         investigation = this.descriptiveInvestigationRepository.save(investigation);
-        this.messageSender.send(investigation, MessageType.CREATE);
         return this.mapper.map(investigation, DescriptiveInvestigationWithVisitResponse.class);
     }
 
@@ -82,7 +77,6 @@ public class InvestigationServiceImpl implements InvestigationService{
         QuantitativeInvestigation investigation = this.quantitativeInvestigationRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("investigation.exceptions.notFound", null)));
         this.mapper.map(request, investigation);
         investigation = this.quantitativeInvestigationRepository.save(investigation);
-        this.messageSender.send(investigation, MessageType.UPDATE);
         return this.mapper.map(investigation, QuantitativeInvestigationWithVisitResponse.class);
     }
 
@@ -92,7 +86,6 @@ public class InvestigationServiceImpl implements InvestigationService{
         DescriptiveInvestigation investigation = this.descriptiveInvestigationRepository.findById(id).orElseThrow(() -> new NotFoundException(this.messageProvider.getMessage("investigation.exceptions.notFound", null)));
         this.mapper.map(request, investigation);
         investigation = this.descriptiveInvestigationRepository.save(investigation);
-        this.messageSender.send(investigation, MessageType.UPDATE);
         return this.mapper.map(investigation, DescriptiveInvestigationWithVisitResponse.class);
     }
 
