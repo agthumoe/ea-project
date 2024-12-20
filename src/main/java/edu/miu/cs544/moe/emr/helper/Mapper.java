@@ -29,23 +29,4 @@ public class Mapper extends ModelMapper {
     public UserPrincipal map(User user) {
         return new UserPrincipal(user.getUsername(), user.getPassword(), List.of(new SimpleGrantedAuthority(user.getRole().toString())));
     }
-
-    public MessageCreator map(Visit visit, MessageType type) {
-        return (session) -> {
-            MapMessage message = session.createMapMessage();
-            message.setString("type", type.toString());
-            message.setString("patient.uuid", visit.getPatient().getUuid());
-            message.setString("patient.name", visit.getPatient().getName());
-            message.setString("patient.age", visit.getPatient().getYears());
-            message.setString("doctor.uuid", visit.getDoctor().getUuid());
-            message.setString("doctor.name", visit.getDoctor().getName());
-            message.setString("doctor.speciality", visit.getDoctor().getSpeciality());
-            message.setString("visit.uuid", visit.getUuid());
-            message.setString("visit.date", visit.getVisitDate().toString());
-            message.setString("visit.complaint", visit.getComplaint());
-            message.setString("visit.provisionalDiagnosis", visit.getProvisionalDiagnosis());
-            message.setString("visit.finalDiagnosis", visit.getFinalDiagnosis());
-            return message;
-        };
-    }
 }

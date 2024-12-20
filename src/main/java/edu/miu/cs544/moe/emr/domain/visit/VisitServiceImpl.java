@@ -10,6 +10,7 @@ import edu.miu.cs544.moe.emr.exception.NotFoundException;
 import edu.miu.cs544.moe.emr.helper.LocaleMessageProvider;
 import edu.miu.cs544.moe.emr.helper.Mapper;
 import edu.miu.cs544.moe.emr.messaging.JmsMessageSender;
+import edu.miu.cs544.moe.emr.messaging.JmsMessageSenderImpl;
 import edu.miu.cs544.moe.emr.messaging.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -56,7 +57,7 @@ public class VisitServiceImpl implements VisitService {
         visit.setPatient(patient);
         visit.setDoctor(doctor);
         visit = this.visitRepository.save(visit);
-        MessageCreator jmsMessage = this.mapper.map(visit, MessageType.CREATE);
+        MessageCreator jmsMessage = JmsMessageSenderImpl.map(visit, MessageType.CREATE);
         this.messageSender.send(jmsMessage);
         return this.mapper.map(visit, VisitResponse.class);
     }
@@ -71,7 +72,7 @@ public class VisitServiceImpl implements VisitService {
         visit.setDoctor(doctor);
         this.mapper.map(request, visit);
         visit = this.visitRepository.save(visit);
-        MessageCreator jmsMessage = this.mapper.map(visit, MessageType.UPDATE);
+        MessageCreator jmsMessage = JmsMessageSenderImpl.map(visit, MessageType.UPDATE);
         this.messageSender.send(jmsMessage);
         return this.mapper.map(visit, VisitResponse.class);
     }

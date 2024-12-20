@@ -38,13 +38,13 @@ public class VisitController {
         return this.visitService.getAllByPatientId(patientId, pageable);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE', 'ROLE_ADMIN')")
     @PostMapping("/visits")
     public VisitResponse create(@RequestBody @Validated VisitRequest request) {
         return this.visitService.create(request);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE')")
+    @PreAuthorize("hasAnyRole('ROLE_PRACTITIONER', 'ROLE_NURSE', 'ROLE_ADMIN')")
     @PutMapping("/visits/{id}")
     public VisitResponse update(@PathVariable Long id, @RequestBody @Validated VisitRequest request) {
         return this.visitService.update(id, request);

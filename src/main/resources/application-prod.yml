@@ -15,9 +15,9 @@ app:
       origins: "*"
     jwt:
       secret: +NYuD2psQg62/zjjXB6LWtqPTg03hnrmBycSiuCXEtqFW5FtnRIR442y7KtZQROUuZ091vW00KS1TbtSDnn8mw==
-      expiration: 86400000 # 1 day
+      expiration: 3600000 # 1 hour
       refresh-token:
-        expiration: 604800000 # 7 days
+        expiration: 86400000 # 1 day
 springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
@@ -26,12 +26,12 @@ spring:
     broker-url: tcp://localhost:61616
     user: artemis
     password: artemis
-  h2:
-    console.enabled: true
   datasource:
-    url: jdbc:h2:mem:mydb
     username: admin
     password: password
-    driverClassName: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/mydb
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true

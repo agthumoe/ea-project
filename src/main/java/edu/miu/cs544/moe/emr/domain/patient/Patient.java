@@ -69,6 +69,6 @@ public class Patient extends Person {
     public String getYears() {
         LocalDate now = LocalDate.now();
         Period period = Period.between(dateOfBirth, now);
-        return String.valueOf(period.getYears());
+        return period.getYears() + " year" + (period.getYears() > 1 ? "s" : "") + " old";
     }
 }
