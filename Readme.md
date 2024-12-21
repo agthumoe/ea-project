@@ -1,3 +1,20 @@
+Main api server is deployed on: http://3.86.43.250/swagger-ui/index.html
+
+Receiver app is deployed on http://54.89.255.183/swagger-ui/index.html
+
+## How to run the project
+- run the project with `dev` profile to use H2 database.
+- run the project with `prod` profile to use MySQL database.
+- use `data` profile to initialize the data.
+
+## Deployment
+- Main project is deployed on AWS EC2 instance.
+- ActiveMQ is deployed on AWS EC2 instance.
+- Receiver project is deployed on AWS EC2 instance.
+- MySQL database is deployed on AWS RDS.
+- Use nginx as a reverse proxy server.
+
+## EA Project
 1. Have at least 4 entities, with relationships between them.
     - Entity list: Doctor, Patient, Visit, Vital, Investigation (DescriptiveInvestigation and QuantitativeInvestigation), Treatment.
 2. At least 2 entities must have full CRUD operations (with REST controller, Service, and Repository)
