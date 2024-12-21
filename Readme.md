@@ -6,6 +6,8 @@ Receiver app is deployed on http://54.89.255.183/swagger-ui/index.html
 - run the project with `dev` profile to use H2 database.
 - run the project with `prod` profile to use MySQL database.
 - use `data` profile to initialize the data.
+- use swagger to test the APIs.
+- http://localhost:8080/swagger-ui/index.html
 
 ## Deployment
 - Main project is deployed on AWS EC2 instance.
